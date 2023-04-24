@@ -16,7 +16,10 @@
   outputs = inputs: {
     darwinConfigurations.Demos-Virtual-Machine = inputs.darwin.lib.darwinSystem {
       system = "aarch64-darwin";
-      pkgs = import inputs.nixpkgs {system = "aarch64-darwin";};
+      pkgs = import inputs.nixpkgs {
+        system = "aarch64-darwin";
+        config.allowUnfree = true;
+      };
       modules = [
         ({pkgs, ...}: {
           # here go the darwin preferences and config items
