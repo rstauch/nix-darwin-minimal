@@ -59,11 +59,21 @@
                 # Don't change this when you change package input. Leave it alone.
                 home.stateVersion = "22.11";
                 # specify my home-manager configs
-                home.packages = [pkgs.ripgrep pkgs.fd pkgs.curl pkgs.less];
+                home.packages = with pkgs; [
+                  ripgrep
+                  fd
+                  curl
+                  less
+                  fmt
+                  nixpkgs-fmt
+                  alejandra
+                  shfmt
+                  shellcheck
+                ];
                 home.sessionVariables = {
                   PAGER = "less";
                   CLICLOLOR = 1;
-                  EDITOR = "nvim";
+                  EDITOR = "code";
                 };
                 programs.bat.enable = true;
                 programs.bat.config.theme = "TwoDark";
@@ -76,6 +86,27 @@
                 programs.zsh.enableAutosuggestions = true;
                 programs.zsh.enableSyntaxHighlighting = true;
                 programs.zsh.shellAliases = {ls = "ls --color=auto -F";};
+
+                programs.vscode = {
+                  enable = true;
+                  package = pkgs.vscode;
+                  userSettings = import ./vscode_settings.nix {inherit pkgs;}.getUserSettings;
+                  extensions =
+                    with pkgs.vscode-extensions; [
+                      ms-azuretools.vscode-docker
+                      skellock.just
+                      jnoortheen.nix-ide
+                      foxundermoon.shell-format
+                      kamadorueda.alejandra
+                      timonwong.shellcheck
+                      mhutchie.git-graph
+                    ]
+                    # TODO: get this to work
+                    # ++ (with pkgs.nur.repos.slaier.vscode-extensions; [
+                    #  ms-vscode-remote.remote-containers
+                    # ])
+                    ;
+                };
 
                 # programs.starship.enable = true;
                 # programs.starship.enableZshIntegration = true;
