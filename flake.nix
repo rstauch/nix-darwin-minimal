@@ -90,7 +90,7 @@
                 programs.vscode = {
                   enable = true;
                   package = pkgs.vscode;
-                  userSettings = import ./vscode_settings.nix {inherit pkgs;}.getUserSettings;
+                  # userSettings = import ./vscode_settings.nix {inherit pkgs;}.getUserSettings;
                   extensions =
                     with pkgs.vscode-extensions; [
                       ms-azuretools.vscode-docker
